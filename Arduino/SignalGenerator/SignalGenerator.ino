@@ -223,8 +223,9 @@ void loop() {
   }
 }
 
+
 void handleSerial() {
-  if (Serial.available()) {
+  while(Serial.available()) {
     char c = Serial.read();
     switch (mode) {
 
@@ -304,7 +305,7 @@ void handleSerial() {
         break;
 
       case MODE_SWEEP:
-        if (c != '\n') mode = MODE_MANUAL;
+        if (c != '\r') mode = MODE_MANUAL;
         break;
 
       case MODE_SET_GAIN:
@@ -351,7 +352,7 @@ void handleSweep() {
 }
 
 bool lastDigit(char c) {
-  if (c == '\n') {
+  if (c == '\r') {
     mode = MODE_MANUAL;
     return true; // done with digits
   }
